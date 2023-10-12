@@ -23,7 +23,7 @@ class FileStorage:
         """
         sets in __objects the obj with key <obj class name>.id
         """
-        FileStorage.__objects["obj.__class__.__name__" + "obj.id"] = obj
+        FileStorage.__objects[f"{type(obj).__name__}.{obj.id}"] = obj
 
     def save(self):
         """
@@ -34,7 +34,7 @@ class FileStorage:
         for key, value in FileStorage.__objects.items():
             to_json[key] = value.to_dict()
 
-            with open(self._FileStorage__file_path, 'w', encoding='utf-8') as file:
+            with open(FileStorage.__file_path, 'w', encoding='utf-8') as file:
                 json.dump(to_json, file)
 
     def reload(self):
@@ -45,18 +45,17 @@ class FileStorage:
         """
 
         with suppress(FileNotFoundError):
-            path = Path(self._FileStorage__file_path)
+            path = Path(FileStorage.__file_path)
             if path.is_file():
-                with open(self._FileStorage__file_path, 'r', encoding='utf-8') as f:
+                with open(FileStorage.__file_path, 'r', encoding='utf-8') as f:
                     from_json = json.load(f)
 
                     for i, j in from_json.items():
                         class_name = j.get("__class__")
                         if class_name is not None:
                                 cls = eval(class_name)
+                                if isinstance(cls, type):
 
-                        if isinstance(cls, type):
+                                    instance = cls(**j)
 
-                            instance = cls(**j)
-
-                            FileStorage.__objects[i] = instance
+                                    FileStorage.__objects[i] = instance
