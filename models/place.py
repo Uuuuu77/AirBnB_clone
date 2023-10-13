@@ -3,7 +3,7 @@
 from models.base_model imort BaseModel
 
 
-class place(BaseModel):
+class Place(BaseModel):
     """ It shows place class inheriting BaseModel """
     city_id = ""
     user_id = ""
