@@ -1,5 +1,4 @@
-Team Project by John Njuguna and Samuel Njau.
-	Welcome to the AirBnB clone project!
+Welcome to the AirBnB clone project!
 Before starting, please read the AirBnB concept page.
 
 First step: Write a command interpreter to manage your AirBnB objects.
