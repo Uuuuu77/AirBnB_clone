@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ It defines place class """
-from models.base_model imort BaseModel
+from models.base_model import BaseModel
 
 
 class Place(BaseModel):
