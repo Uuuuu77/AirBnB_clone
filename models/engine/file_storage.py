@@ -37,7 +37,7 @@ class FileStorage:
         from models import place, city, state, review
         cls = {'BaseModel': base_model, 'User': user, 'Amenity': amenity,
                'Place': place, 'City': city, 'State': state, 'Review': review}
-        if is_file(FileStorage.__file_path):
+        if isfile(FileStorage.__file_path):
             with open(FileStorage.__file_path, encoding="UTF-8") as _file:
                 from_json = load(_file)
                 for val in from_json.values():
