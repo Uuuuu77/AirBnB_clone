@@ -2,7 +2,7 @@
 """
     models/engine/file_storage.py of JSON serialization and deserialization.
 """
-from os.path import is_file
+from os.path import isfile
 from json import dump, load
 import sys
 
