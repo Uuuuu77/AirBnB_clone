@@ -15,8 +15,8 @@ class HBNB_Command(cmd.Cmd):
     """
     prompt = "(hbnb) "
 
-    classes = {"BaseModel": base_model, "User": user, "Amenity": amenity, 
-            "Place": place, "City": city, "State": state, "Review": review}
+    classes = {'BaseModel': base_model, 'User': user, 'Amenity': amenity,
+               'Place': place, 'City': city, 'State': state, 'Review': review}
 
     def do_EOF(self, line):
         """ This is the End of line marker; Ctr+D exits """
@@ -115,7 +115,7 @@ class HBNB_Command(cmd.Cmd):
                     storage.save()
                 except ValueError:
                     pass
-    
+
     def default(self, line):
         """ Runs None built-in command """
         cmds = line.split(".")
