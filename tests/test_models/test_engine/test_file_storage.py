@@ -11,9 +11,43 @@ class TestFileStorage(unittest.TestCase):
     """
     """
 
-    def setUp(self):
+    @classmethod
+    def setUp(cls):
         """
         initializes a new instance of FileStorage for each test
         """
-        self.storage = FileStorage()
+        cls.storage = FileStorage()
+
+    @classmethod
+    def tearDown(cls):
+        """
+        clears up after every test
+        """
+
+        _path = Path(cls.storage._FileStorage__file_path)
+        if _path.is_path():
+            _path.unlink()
+
+    def test_all(self):
+        """
+        """
+        self.assertIsInstance(self.storage.all(), dict)
+
+    def test_new_method(self):
+        """
+        checks the __objects attribute for the model key
+        """
+        obj = BaseModel()
+        self.storage.new(obj)
+        self.assertIn(f"BaseModel.{obj.id}", self.storage.all())
+        self.assertEqual(self.storage.all()[f"BaseModel.{obj.id}"])
+
+    def test_save(self):
+        """
+        Checks if the file exists and if the models saved have the same id
+        with the ones that reloaded
+        """
+       self.storage.save()
+       _path = Path(self.storage._FileStorage__file_path)
+       self.assertTrue(_path.is_file())
 
