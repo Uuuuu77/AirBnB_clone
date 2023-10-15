@@ -51,3 +51,6 @@ class TestFileStorage(unittest.TestCase):
        _path = Path(self.storage._FileStorage__file_path)
        self.assertTrue(_path.is_file())
 
+
+    if __name__ == '__main__':
+        unittsest.main()
