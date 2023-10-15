@@ -3,8 +3,9 @@
 This module contains tests for the module file storage
 """
 import unittest
-from models.file_storage import FileStorage
-fropm models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
+from models.base_model import BaseModel
+from pathlib import Path
 
 
 class TestFileStorage(unittest.TestCase):
@@ -25,7 +26,7 @@ class TestFileStorage(unittest.TestCase):
         """
 
         _path = Path(cls.storage._FileStorage__file_path)
-        if _path.is_path():
+        if _path.is_file():
             _path.unlink()
 
     def test_all(self):
@@ -39,25 +40,27 @@ class TestFileStorage(unittest.TestCase):
         """
         obj = BaseModel()
         self.storage.new(obj)
-        self.assertIn(f"BaseModel.{obj.id}", self.storage.all())
-        self.assertEqual(self.storage.all()[f"BaseModel.{obj.id}"])
+        key = f"BaseModel.{obj.id}"
+        self.assertIn(key, self.storage.all())
+        retrieved = self.storage.all()[key]
+        self.assertEqual(obj, retrieved)
 
     def test_save(self):
         """
         Checks if the file exists and if the models saved have the same id
         with the ones that reloaded
         """
-       self.storage.save()
-       _path = Path(self.storage._FileStorage__file_path)
-       self.assertTrue(_path.is_file())
+        self.storage.save()
+        _path = Path(self.storage._FileStorage__file_path)
+        self.assertTrue(_path.is_file())
 
-       _object = BaseModel()
-       object_id = _object.id
-       self.storage.new(_object)
-       self.storage.save()
-       new_storage = FileStorage()
-       new_storage.reload()
-       self.assertIn(f"BaseModel.{obj_id}", new_storage.all())
+        _object = BaseModel()
+        object_id = _object.id
+        self.storage.new(_object)
+        self.storage.save()
+        new_storage = FileStorage()
+        new_storage.reload()
+        self.assertIn(f"BaseModel.{object_id}", new_storage.all())
 
     def test_update_time(self):
         """
@@ -70,9 +73,9 @@ class TestFileStorage(unittest.TestCase):
         self.storage.save()
         new_storage = FileStorage()
         new_storage.reload()
-        reloaded = new_storage.all()[f"BaseModel.{obj_id}"]
-        self.assertNotEqual(update_time, reloaded.updated_at)
+        reloaded = new_storage.all()[f"BaseModel.{_object.id}"]
+        self.assertEqual(update_time, reloaded.updated_at)
 
 
     if __name__ == '__main__':
-        unittsest.main()
+        unittest.main()
