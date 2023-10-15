@@ -13,6 +13,10 @@ class BaseModel:
     """
 
     def __init__(self, *args, **kwargs):
+        """
+        This is the init method. it takes keyword agruments
+        """
+
         if kwargs:
             del kwargs['__class__']
             for key, value in kwargs.items():
