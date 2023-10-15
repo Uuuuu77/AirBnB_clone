@@ -171,5 +171,5 @@ class HBNB_Command(cmd.Cmd):
                     print(f"*** Unknown syntax: {line}")
 
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     HBNB_Command().cmdloop()
