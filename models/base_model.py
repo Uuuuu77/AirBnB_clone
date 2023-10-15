@@ -27,7 +27,7 @@ class BaseModel:
             self.updated_at = datetime.now()
             from . import storage
             storage.new(self)
-    
+
     def __str__(self):
         """
         Prints a string in a specific format
@@ -51,7 +51,7 @@ class BaseModel:
         returns a dictionary containing all keys/values
         of __dict__ of the instance
         """
-        my_dict={}
+        my_dict = {}
 
         my_dict["__class__"] = self.__class__.__name__
 
@@ -62,4 +62,3 @@ class BaseModel:
                 my_dict[key] = value
 
         return my_dict
-    
