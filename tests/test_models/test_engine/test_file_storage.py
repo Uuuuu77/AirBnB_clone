@@ -65,6 +65,14 @@ class TestFileStorage(unittest.TestCase):
         before and after calling the save method
         """
 
+        _object = BaseModel()
+        update_time = _object.updated_at
+        self.storage.save()
+        new_storage = FileStorage()
+        new_storage.reload()
+        reloaded = new_storage.all()[f"BaseModel.{obj_id}"]
+        self.assertNotEqual(update_time, reloaded.updated_at)
+
 
     if __name__ == '__main__':
         unittsest.main()
