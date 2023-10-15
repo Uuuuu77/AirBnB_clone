@@ -10,6 +10,10 @@ from models.base_model import BaseModel
 
 
 class FileStorage:
+    """
+    This is the FileStorage class which handles how objects are stored
+    in a file so as to  maintain data persistency
+    """
 
     __file_path = "file.json"
     __objects = {}
