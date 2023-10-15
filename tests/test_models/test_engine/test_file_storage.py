@@ -59,6 +59,12 @@ class TestFileStorage(unittest.TestCase):
        new_storage.reload()
        self.assertIn(f"BaseModel.{obj_id}", new_storage.all())
 
+    def test_update_time(self):
+        """
+        tests for inconcistency in the updated_at attribute
+        before and after calling the save method
+        """
+
 
     if __name__ == '__main__':
         unittsest.main()
