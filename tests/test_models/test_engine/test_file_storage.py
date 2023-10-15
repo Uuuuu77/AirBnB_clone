@@ -51,6 +51,14 @@ class TestFileStorage(unittest.TestCase):
        _path = Path(self.storage._FileStorage__file_path)
        self.assertTrue(_path.is_file())
 
+       _object = BaseModel()
+       object_id = _object.id
+       self.storage.new(_object)
+       self.storage.save()
+       new_storage = FileStorage()
+       new_storage.reload()
+       self.assertIn(f"BaseModel.{obj_id}", new_storage.all())
+
 
     if __name__ == '__main__':
         unittsest.main()
