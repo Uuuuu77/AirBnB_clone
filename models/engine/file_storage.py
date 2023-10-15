@@ -19,6 +19,7 @@ class FileStorage:
         returns the dictionary stored in __objects
         """
         return FileStorage.__objects
+
     def new(self, obj):
         """
         sets in __objects the obj with key <obj class name>.id
@@ -53,9 +54,9 @@ class FileStorage:
                     for i, j in from_json.items():
                         class_name = j.get("__class__")
                         if class_name is not None:
-                                cls = eval(class_name)
-                                if isinstance(cls, type):
+                            cls = eval(class_name)
+                            if isinstance(cls, type):
 
-                                    instance = cls(**j)
+                                instance = cls(**j)
 
-                                    FileStorage.__objects[i] = instance
+                                FileStorage.__objects[i] = instance
