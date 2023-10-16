@@ -17,7 +17,7 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb)"
 
     classes = {"BaseModel", "User", "State", "Amenity",
-                "City", "Place", "Review"}
+               "City", "Place", "Review"}
 
     def do_help(self, args):
         """
@@ -101,7 +101,7 @@ EOF  help  quit
                         all_obj = storage.all()
                         print(all_obj[k])
             except IndexError:
-                        print("** instance id missing **")
+                print("** instance id missing **")
 
     def do_destroy(self, args):
         """
@@ -125,7 +125,6 @@ EOF  help  quit
                         storage.save()
             except IndexError:
                 print("** instance id missing **")
-
 
     def do_all(self, line):
         """
@@ -151,4 +150,4 @@ EOF  help  quit
 
 
 if __name__ == '__main__':
-        HBNBCommand().cmdloop()
+    HBNBCommand().cmdloop()
