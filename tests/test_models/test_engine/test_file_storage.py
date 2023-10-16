@@ -17,20 +17,20 @@ class TestFileStorage(unittest.TestCase):
     maxdiff = None
 
     @classmethod
-    def setUpClass(cls):
+    def setUp(cls):
         """ Set up class instance """
         cls.bm1 = BaseModel()
         cls.bm1.color = "pink"
         cls.bm1.size = 10
 
         cls.bm2 = BaseModel()
-        cls.bm2.colour = "blue"
+        cls.bm2.color = "blue"
         cls.bm2.size = 8.45
 
         cls.store = FileStorage()
 
     @classmethod
-    def tearDownClass(cls):
+    def tearDown(cls):
         """ It tears down created instances """
         del cls.bm1
         del cls.bm2
@@ -101,7 +101,7 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", encoding="UTF-8") as _file:
             from_json = load(_file)
             keys = [x for x in from_json.keys()]
-            self.assertEqual(keys, keys_obj)
+            self.assertEqual(keys, key_obj)
 
     def test_reload_no_file(self):
         """ Testing reload if there is no file """
