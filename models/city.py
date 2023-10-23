@@ -1,9 +1,14 @@
-#!/usr/bin/python3
-""" Defines city class """
+#!/usr/bin/env python3
+"""
+Module for my City class
+"""
 from models.base_model import BaseModel
 
 
 class City(BaseModel):
-    """ It shors that city class is inheriting BaseModel """
+    """
+    this is my City class
+    """
+
     state_id = ""
     name = ""

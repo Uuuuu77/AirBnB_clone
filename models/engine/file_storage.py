@@ -1,50 +1,75 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
-    models/engine/file_storage.py of JSON serialization and deserialization.
+This module contains the class filestorage where we will do the serialization
+and deserialization.
 """
-from os.path import isfile
-from json import dump, load
-import sys
+from pathlib import Path
+from contextlib import suppress
+import json
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
     """
-        Serialize instance to a JSON file & deserialize JSON file to instance.
+    This is the FileStorage class which handles how objects are stored
+    in a file so as to  maintain data persistency
     """
+
     __file_path = "file.json"
     __objects = {}
+    """my_classes = {"BaseModel": BaseModel, "User": User, "Place": Place,
+                    "Amenity": Amenity, "City": City, "Review": Review,
+                    "State": State}"""
 
     def all(self):
-        """ Returns dictionary __objects """
-        return FileStorage.__objects
+        """
+        returns the dictionary stored in __objects
+        """
+        return self.__objects
 
     def new(self, obj):
-        """ It sets in __objects the obj with key <obj class name>.id """
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        FileStorage.__objects.update({key: obj})
+        """
+        sets in __objects the obj with key <obj class name>.id
+        """
+        self.__objects[f"{type(obj).__name__}.{obj.id}"] = obj
 
     def save(self):
-        """ Serializes __objects to the JSON file (path: __file_path) """
-        sav_dict = {}
-        for key, val in FileStorage.__objects.items():
-            sav_dict.update({key: val.to_dict()})
-        with open(FileStorage.__file_path, mode="w", encoding="UTF-8") as f:
-            dump(sav.dict, f)
+        """
+        serializes __objects to the JSON file (path: __file_path)
+        """
+        to_json = {}
+
+        for key, value in FileStorage.__objects.items():
+            to_json[key] = value.to_dict()
+
+            with open(self.__file_path, 'w', encoding='utf-8') as file:
+                json.dump(to_json, file)
 
     def reload(self):
-        """ Deserialize the JSON file to __objects if it exists """
-        from models import base_model, user, amenity
-        from models import place, city, state, review
-        cls = {'BaseModel': base_model, 'User': user, 'Amenity': amenity,
-               'Place': place, 'City': city, 'State': state, 'Review': review}
-        if isfile(FileStorage.__file_path):
-            with open(FileStorage.__file_path, encoding="UTF-8") as _file:
-                from_json = load(_file)
-                for val in from_json.values():
-                    cls_name = val["__class__"]
-                    cls_obj = getattr(cls[cls_name], cls_name)
-                    # if cls_name == "BaseModel":
-                    # cls_obj = getattr(base_model, cls_name)
-                    # elif cls_name == "User":
-                    # cls_obj = getattr(user, cls_name)
-                    self.new(cls_obj(**val))
+        """
+        deserializes the JSON file to __objects
+        (only if the JSON file (__file_path) exists;
+        otherwise, do nothing.
+        """
+
+        with suppress(FileNotFoundError):
+            path = Path(FileStorage.__file_path)
+            if path.is_file():
+                with open(self.__file_path, 'r', encoding='utf-8') as f:
+                    from_json = json.load(f)
+
+                    for i, j in from_json.items():
+                        class_name = j.get("__class__")
+                        if class_name is not None:
+                            cls = eval(class_name)
+                            if isinstance(cls, type):
+
+                                instance = cls(**j)
+
+                                self.__objects[i] = instance

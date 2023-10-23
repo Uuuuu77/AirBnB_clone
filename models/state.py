@@ -1,8 +1,12 @@
-#!/usr/bin/python3
-""" It defines state class """
+#!/usr/bin/env python3
+"""
+state class module
+"""
 from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """ It shows state class inheriting BaseModel """
+    """
+    Inherits from the BaseModel"
+    """
     name = ""

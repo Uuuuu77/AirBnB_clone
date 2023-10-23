@@ -12,6 +12,7 @@ from datetime import datetime
 
 class TestBaseModel(unittest.TestCase):
     """ Testing BaseModel class """
+    @classmethod
     def setUpClass(cls):
         """ Set up class instances """
         cls.bm1 = BaseModel()

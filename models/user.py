@@ -1,12 +1,15 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
-    models/user.py module of user class
+A module for the class user
 """
 from models.base_model import BaseModel
 
 
 class User(BaseModel):
-    """ It show that user class inherits BaseModel & creates new users """
+    """
+    A class that inherits from BaseModel
+    """
+
     email = ""
     password = ""
     first_name = ""

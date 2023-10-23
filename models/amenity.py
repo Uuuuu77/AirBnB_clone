@@ -1,8 +1,13 @@
-#!/usr/bin/python3
-""" It defines the amenity class """
+#!usr/bin/env python3
+"""
+Amenity class module
+"""
 from models.base_model import BaseModel
 
 
 class Amenity(BaseModel):
-    """ It shows amenity inheriting BaseModel """
+    """
+    the amenity class
+    """
+
     name = ""
